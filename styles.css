@@ -274,15 +274,13 @@
         }
 #faqModal, #contactModal, #blogModal {
             max-width: 500px; /* Smaller max-width for FAQ/Contact/Blog */
-            width: 90vw; /* ADDED: Constrain on mobile screens for a box look */
-            border-radius: 12px; /* ADDED: Give it rounded corners */
-            margin: auto; /* ADDED: Ensure it's centered */
         }
         
         dialog::backdrop {
             background: rgba(0, 0, 0, 0.7);
         }
 
+        }
                 /* Desktop-specific styles for the new button (to hide it) */
         @media (min-width: 769px) {
 
@@ -352,6 +350,7 @@
             height: 120px;
             width: 100%;
             object-fit: cover;
+        }
         }
         /* Swipe indicator for mobile */
         .swipe-indicator {
