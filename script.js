@@ -350,6 +350,43 @@
             loadMoreBtn.classList.add('hidden');
         }
     }
+	
+	// --- FAQ ACCORDION LOGIC FIX ---
+document.addEventListener('DOMContentLoaded', () => {
+    // Select all buttons with the class 'faq-question'
+    const faqQuestions = document.querySelectorAll('.faq-question');
+
+    faqQuestions.forEach(question => {
+        // Attach a 'click' listener to each question button
+        question.addEventListener('click', function() {
+            const answer = this.nextElementSibling; // The answer is the next element after the button
+            const icon = this.querySelector('svg'); // The arrow icon inside the button
+
+            // 1. Toggle the visibility of the answer (by toggling the 'hidden' class)
+            if (answer) {
+                answer.classList.toggle('hidden');
+            }
+
+            // 2. Rotate the icon to indicate state (open/closed)
+            if (icon) {
+                icon.classList.toggle('rotate-180');
+            }
+            
+            // Optional: Close any other open FAQ answers (for true accordion behavior)
+            faqQuestions.forEach(otherQuestion => {
+                if (otherQuestion !== this) {
+                    const otherAnswer = otherQuestion.nextElementSibling;
+                    const otherIcon = otherQuestion.querySelector('svg');
+
+                    // If another answer is open, close it
+                    if (otherAnswer && !otherAnswer.classList.contains('hidden')) {
+                        otherAnswer.classList.add('hidden');
+                    }
+                    // Reset the arrow icon on the other question
+                    if (otherIcon) {
+                        otherIcon.classList.remove('rotate-180');
+                    }
+                }
     // Load more function
     function loadMore() {
         // Get currently hidden matching
