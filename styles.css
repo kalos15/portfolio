@@ -272,32 +272,16 @@
         #domainModal::backdrop {
             background: rgba(0, 0, 0, 0.7);
         }
-        /* FIX: Separated and added styling for #faqModal to reduce its size and ensure it's a centered box */
-        #faqModal {
-            max-width: 400px; /* Reduced size for FAQ as requested */
-            width: 90vw;
-            border-radius: 12px;
-            margin: auto;
-            border: none;
-            padding: 0;
+#faqModal, #contactModal, #blogModal {
+            max-width: 500px; /* Smaller max-width for FAQ/Contact/Blog */
+        }
+        
+        dialog::backdrop {
+            background: rgba(0, 0, 0, 0.7);
         }
 
-        #contactModal, #blogModal {
-            max-width: 500px; /* Keeping Contact/Blog at the original max size */
-            width: 90vw;
-            border-radius: 12px;
-            margin: auto;
-            border: none;
-            padding: 0;
         }
-        
-        dialog::backdrop {
-            background: rgba(0, 0, 0, 0.7);
-        }
-
-        /* FIX: Removed the stray closing brace } that was here and caused a CSS error */
-
-        /* Desktop-specific styles for the new button (to hide it) */
+                /* Desktop-specific styles for the new button (to hide it) */
         @media (min-width: 769px) {
 
             .swipe-indicator {
@@ -324,19 +308,19 @@
         }
         /* Contact/Blog Modal Close Button */
         .modal-close-btn {
-            position: absolute;      /* make it float over content */
-            top: 10px;               /* distance from top of modal */
-            right: 10px;             /* distance from right edge */
-            width: 36px;             /* optional size */
-            height: 36px;            /* optional size */
-            border-radius: 50%;      /* circular button */
-            background: rgba(0,0,0,0.1);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            z-index: 10;             /* above modal content */
+            position: absolute;      /* make it float over content */
+    top: 10px;               /* distance from top of modal */
+    right: 10px;             /* distance from right edge */
+    width: 36px;             /* optional size */
+    height: 36px;            /* optional size */
+    border-radius: 50%;      /* circular button */
+    background: rgba(0,0,0,0.1);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;             /* above modal content */
         }
         .modal-close-btn:hover {
             background: rgba(0,0,0,0.2);
@@ -367,7 +351,7 @@
             width: 100%;
             object-fit: cover;
         }
-        
+        }
         /* Swipe indicator for mobile */
         .swipe-indicator {
             display: none;
