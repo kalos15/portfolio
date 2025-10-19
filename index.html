@@ -2066,33 +2066,45 @@
         </div>
     </dialog>
 <dialog id="contactModal" class="p-0">
-    <div class="relative w-full h-full bg-white rounded-xl overflow-hidden">
-        <!-- Close Button -->
-        <button onclick="closeModal('contactModal')" class="modal-close-btn bg-indigo-600 hover:bg-indigo-700 p-2 rounded-full absolute top-4 right-4">
-            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-            </svg>
-        </button>
-        <!-- Contact Content -->
-        <div class="contact-content p-8">
-            <h2 class="text-3xl font-bold mb-4 text-indigo-700">Get in Touch</h2>
-            <p class="text-gray-700 mb-3">For domain inquiries, price negotiations, or wholesale requests.</p>
-            
-            <p class="text-gray-600 mb-2">Email:
-                <a href="mailto:kaloskalos15@gmail.com" class="text-indigo-700 hover:underline font-semibold">kaloskalos15@gmail.com</a>
-            </p>
-            
-            <p class="text-gray-600 mb-2">X (Twitter):
-                <a href="https://x.com/kalos_15/" target="_blank" class="text-indigo-700 hover:underline font-semibold">@kalos_15</a>
-            </p>
-            
-            <p class="text-gray-600 mb-4">Instagram:
-                <a href="https://www.instagram.com/_kalos.x" target="_blank" class="text-indigo-700 hover:underline font-semibold">@_kalos.x</a>
-            </p>
-            <p class="text-gray-500">Welcome all.</p>
+        <div class="relative w-full h-full bg-white rounded-xl overflow-hidden">
+            <!-- Close Button -->
+            <button onclick="closeModal('contactModal')" class="modal-close-btn bg-indigo-600 hover:bg-indigo-700 p-2 rounded-full absolute top-4 right-4 z-20">
+                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+            <!-- Contact Content (User Provided) -->
+            <div class="contact-content p-8">
+                <h2 class="text-3xl font-bold mb-4 text-indigo-700">Get in Touch</h2>
+                <p class="text-gray-700 mb-6">For domain inquiries, price negotiations, or wholesale requests, I'm here to help. You can reach me through the channels below:</p>
+                
+                <div class="space-y-4">
+                    <div class="flex items-center space-x-3">
+                        <svg class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                        <p class="text-gray-600">Email:
+                            <a href="mailto:kaloskalos15@gmail.com" class="text-indigo-700 hover:underline font-semibold">kaloskalos15@gmail.com</a>
+                        </p>
+                    </div>
+                    
+                    <div class="flex items-center space-x-3">
+                        <svg class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        <p class="text-gray-600">X (Twitter):
+                            <a href="https://x.com/kalos_15/" target="_blank" class="text-indigo-700 hover:underline font-semibold">@kalos_15</a>
+                        </p>
+                    </div>
+                    
+                    <div class="flex items-center space-x-3">
+                        <svg class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                        <p class="text-gray-600">Instagram:
+                            <a href="https://www.instagram.com/_kalos.x" target="_blank" class="text-indigo-700 hover:underline font-semibold">@_kalos.x</a>
+                        </p>
+                    </div>
+                </div>
+                
+                <p class="text-gray-500 mt-6 pt-4 border-t border-gray-200">Welcome all.</p>
+            </div>
         </div>
-    </div>
-</dialog>
+    </dialog>
     <dialog id="blogModal" class="p-0">
         <div class="relative w-full h-full bg-gray-50 rounded-xl overflow-hidden">
              <button onclick="closeModal('blogModal')" class="modal-close-btn bg-indigo-600 hover:bg-indigo-700">
