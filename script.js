@@ -562,4 +562,63 @@ domainModal.addEventListener("click", (e) => {
   if (e.target === domainModal) {
     closeModal("domainModal")
   }
+  // Helper function to extract the arguments from the complex onclick string
+    function extractModalArgs(onclickString) {
+        // This regex captures the three arguments within quotes from the openDomainModal function call
+        // ARG1 (domain), ARG2 (price), ARG3 (description)
+        const regex = /openDomainModal\s*\(\s*['"]([^'"]+)['"]\s*,\s*['"]([^'"]*)['"]\s*,\s*['"]([^'"]*)['"]\s*\)/;
+        const match = onclickString.match(regex);
+        
+        if (match && match.length === 4) {
+            // match[1] = Domain, match[2] = Price/Symbol, match[3] = Description
+            return {
+                domain: match[1],
+                price: match[2],
+                description: match[3]
+            };
+        }
+        return null; // Return null if arguments cannot be extracted
+    }
+
+    window.onload = function() {
+        // 1. Get the current domain name (e.g., "2vds.com" or "kin7.com")
+        const rawDomain = window.location.hostname;
+        const currentDomain = rawDomain.replace(/^www\./, '');
+
+        let targetArticle = null;
+
+        // 2. Search for the HTML <article> that matches the current domain
+        const allArticles = document.querySelectorAll('article');
+
+        for (const article of allArticles) {
+            const h3 = article.querySelector('h3.text-lg');
+            
+            // Check if the <h3> text content matches the current domain
+            if (h3 && h3.textContent.trim() === currentDomain) {
+                targetArticle = article;
+                break;
+            }
+        }
+
+        // 3. If the matching card is found, extract the data and open the modal
+        if (targetArticle && typeof openDomainModal === 'function') {
+            const onclickAttr = targetArticle.getAttribute('onclick');
+            
+            if (onclickAttr) {
+                const args = extractModalArgs(onclickAttr);
+                
+                if (args) {
+                    // Call the modal function using the data extracted from the card's onclick attribute
+                    openDomainModal(args.domain, args.price, args.description);
+                    console.log(`Modal auto-opened for ${args.domain}`);
+                } else {
+                     console.error("Could not parse arguments from the article's onclick attribute.");
+                }
+            } else {
+                console.error("Article found, but missing the 'onclick' attribute to get data.");
+            }
+        } else {
+            console.warn(`Could not find an article element matching the current domain: ${currentDomain}. Modal not opened.`);
+        }
 })
+
