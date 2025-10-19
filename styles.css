@@ -288,6 +288,17 @@
                 display: none;
             }
         }
+		
+		/* Add this to styles.css (or confirm it is working via Tailwind) */
+.faq-question svg {
+    /* Ensures smooth rotation */
+    transition: transform 0.3s ease; 
+        }
+
+/* This is the class that toggles the icon rotation */
+.rotate-180 {
+    transform: rotate(180deg);
+        }
         /* FAQ Styles */
         .faq-item {
             border-bottom: 1px solid #eee;
