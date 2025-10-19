@@ -57,9 +57,25 @@
         }
         removeSwipeListeners();
     }
+    
+    // EXISTING Close listener for Domain Modal
     document.getElementById('closeDomainModal').addEventListener('click', () => closeModal('domainModal'));
-    // You should have similar close button handlers for the other modals as well!
-    // Example: document.getElementById('closeFaqModal').addEventListener('click', () => closeModal('faqModal'));
+    
+    // NEW/UPDATED: Close listeners for FAQ and Contact modals.
+    // NOTE: In the HTML you provided, the close button for FAQ and Contact is inline (onclick="closeModal('modalId')"),
+    // but if you switch to event listeners for consistency, you would use this pattern:
+    // document.getElementById('closeFaqModal').addEventListener('click', () => closeModal('faqModal'));
+    // document.getElementById('closeContactModal').addEventListener('click', () => closeModal('contactModal'));
+    
+    // IMPORTANT: Since your HTML uses inline onclick="closeModal('faqModal')" etc., 
+    // we'll assume the elements with these IDs exist and will ensure the JS is clean.
+    // However, the provided HTML didn't use IDs like 'closeContactModal', so if you 
+    // switch to using IDs on your close buttons instead of inline 'onclick', this is where
+    // you would add the listeners.
+    
+    // For the existing logic to work with the inline 'onclick', no *new* listeners 
+    // are strictly needed here, but the functions below support it.
+    
     function redirectToSpaceship(event) {
         const domainName = event.currentTarget.getAttribute('data-domain');
         if (domainName) {
@@ -147,17 +163,21 @@
     }
     // FAQ specific function
     function toggleFaq(element) {
-        const answer = element.nextElementSibling;
-        const icon = element.querySelector('svg');
-        if (answer.classList.contains('open')) {
-            answer.classList.remove('open');
-            icon.classList.remove('rotate-180');
-        } else {
-            // Close all others
-            document.querySelectorAll('#faqModal .faq-answer.open').forEach(ans => ans.classList.remove('open'));
-            document.querySelectorAll('#faqModal .faq-question svg.rotate-180').forEach(ic => ic.classList.remove('rotate-180'));
-            answer.classList.add('open');
-            icon.classList.add('rotate-180');
+        // Find the closest FAQ item
+        const faqItem = element.closest('.faq-item');
+
+        // Toggle the 'active' class on the current item
+        // This relies on the new CSS to handle the transition (max-height and rotation)
+        const isActive = faqItem.classList.contains('active');
+
+        // Close all others
+        document.querySelectorAll('#faqModal .faq-item.active').forEach(item => {
+            item.classList.remove('active');
+        });
+
+        // Toggle the current one
+        if (!isActive) {
+            faqItem.classList.add('active');
         }
     }
     // --- Domain Filtering and Pagination Script ---
@@ -165,7 +185,8 @@
     let pageSize = 9;
     const domains = document.querySelectorAll('#portfolio-grid article');
     const loadMoreBtn = document.getElementById('load-more-btn');
-    // NEW: The list of domains for the 'curated' filter (lower-cased for matching)
+
+    // NEW/UPDATED: The list of domains for the 'One Word' filter (using the old 'curated' key)
     const curatedList = [
         'departmental.de', 'announces.xyz', 'responded.xyz', 'largely.xyz',
         'difficulties.xyz', 'physically.io', 'handcuff.uk', 'millidegree.com',
@@ -177,6 +198,109 @@
         'oppose.info', 'imitate.info', 'exclude.info', 'enlist.info',
         'decrease.info'
     ];
+
+    // NEW: Category-based Domain Lists (all lower-cased for case-insensitive matching)
+    const techList = [
+        'nomias.com', 'lodley.com', 'gps-company.com', 'glon.net', 'onfarm.net', 'xtt.app',
+        'botai.uk', 'gamesai.net', 'ai0.pro', 'ledlab.net', 'physically.io', 'drove.app',
+        '2vds.com', '06fx.com', 'lucahost.com', 'fuzz.chat', 'kin7.com', 'gadget.now',
+        'echoice.xyz', 'coloration.io', 'virtualbot.app', 'bondtrading.co', 'spaceht.com',
+        'theai.city', 'sich.xyz', 'follow.by', 'xn--dubi-noa.xyz', 'xn--dda.xyz',
+        'xn--clck-wpa.click', 'storm.delivery', 'exclude.info', 'autat.com'
+    ];
+    const aiList = [
+        'nomias.com', 'xtt.app', 'botai.uk', 'gamesai.net', 'ai0.pro', 'drove.app',
+        'virtualbot.app', 'theai.city', 'gaming.li', 'autat.com', 'fuzz.chat',
+        'kin7.com', 'echoice.xyz', 'glon.net', 'sich.xyz', 'xn--dda.xyz',
+        'xn--clck-wpa.click', 'ledlab.net', 'spaceht.com', 'onfarm.net',
+        'physically.io', 'mencare.app', 'relation.cc', '2vds.com', '06fx.com',
+        'lucahost.com', 'exclude.info', 'imitate.info'
+    ];
+    const saasList = [
+        'nomias.com', 'lodley.com', 'xtt.app', 'botai.uk', 'ai0.pro', 'drove.app',
+        'mencare.app', 'virtualbot.app', 'fuzz.chat', 'kin7.com', 'coloration.io',
+        'autat.com', 'gamesai.net', 'physically.io', 'gps-company.com', 'lucahost.com',
+        'relation.cc', 'exclude.info', 'enlist.info', 'imitate.info', 'gadget.now',
+        'storm.delivery', 'follow.by', 'echoice.xyz', 'theai.city', '2vds.com',
+        '06fx.com', 'glon.net', 'sich.xyz'
+    ];
+    const healthList = [
+        'eliteha.com', 'physically.io', 'mencare.app', 'litepain.com', 'decrease.info',
+        'womanhood.uk', 'handmaid.uk', 'flexure.uk', 'coiffure.top', 'vauty.com',
+        'beau1y.com', 'bella.center', 'dq.baby', 'latina.beauty'
+    ];
+    const beautyList = [
+        'vauty.com', 'beau1y.com', 'coiffure.top', 'latina.beauty', 'bella.center',
+        'coloration.uk', 'handmaid.uk', 'womanhood.uk', 'dq.baby', 'eliteha.com',
+        'mencare.app', 'physically.io'
+    ];
+    const travelList = [
+        'gps-company.com', 'drove.app', 'embarkment.uk', 'autat.com', 'storm.delivery'
+    ];
+    const financeList = [
+        'credited.uk', 'bondtrading.co', 'bnb.cx'
+    ];
+    const educationList = [
+        'millidegree.com', 'imitate.info', 'enlist.info', 'relation.cc',
+        'difficulties.xyz', 'areya.org', 'physically.io', 'decrease.info', 'exclude.info',
+        'oppose.info', 'reopen.info'
+    ];
+    const foodList = [
+        'onfarm.net', 'cold.wine'
+    ];
+    const realEstateList = [
+        'thehouses.shop'
+    ];
+    const gamingList = [
+        'gamesai.net', 'gaming.li'
+    ];
+    const lifestyleList = [
+        'rossoff.com', 'laurie.cl', 'lodley.com', 'eliteha.com', 'movs.co.uk',
+        'myluxury.uk', 'announces.xyz', 'largely.xyz', 'difficulties.xyz',
+        'maryam.biz', 'relation.cc', 'elyssa.net', 'jhnny.com', '2vds.com',
+        'kin7.com', 'coloration.uk', 'flexure.uk', 'handmaid.uk', 'mixed.now',
+        'coloration.io', 'womanhood.uk', 'sich.xyz', 'latina.beauty', 'vauty.com',
+        'reopen.info', 'oppose.info', 'imitate.info', 'enlist.info', 'dq.baby',
+        'decrease.info'
+    ];
+    const ecommerceList = [
+        'onfarm.net', 'departmental.de', 'largely.xyz', 'cold.wine', 'thehouses.shop',
+        'gadget.now', 'storm.delivery', 'dq.baby', 'lucahost.com', 'autat.com',
+        'kin7.com', '06fx.com', 'mixed.now', 'vauty.com', 'latina.beauty',
+        'bella.center', 'eliteha.com', '2vds.com'
+    ];
+    const brandableList = [
+        'rossoff.com', 'laurie.cl', 'nomias.com', 'lodley.com', 'eliteha.com',
+        'bnb.cx', 'glon.net', 'thomass.org', 'myluxury.uk', 'largely.xyz',
+        'maryam.biz', 'areya.org', '2vds.com', '06fx.com', 'kin7.com',
+        'elyssa.net', 'jhnny.com', 'sich.xyz', 'gaming.li', 'reopen.info',
+        'oppose.info', 'imitate.info', 'enlist.info', 'dq.baby', 'decrease.info',
+        'millidegree.com', 'onfarm.net', 'coloration.io', 'gadget.now', 'mixed.now'
+    ];
+    const portfolioList = [
+        'areya.org', 'maryam.biz', 'rossoff.com', 'jhnny.com', 'thomass.org'
+    ];
+
+    // Helper map for easy lookup
+    const categoryLists = {
+        'curated': curatedList, // Used for 'One Word' button
+        'Tech': techList,
+        'AI': aiList,
+        'SaaS': saasList,
+        'Health': healthList,
+        'Beauty': beautyList,
+        'Travel': travelList,
+        'Finance': financeList,
+        'Education': educationList,
+        'Food': foodList,
+        'RealEstate': realEstateList,
+        'Gaming': gamingList,
+        'Lifestyle': lifestyleList,
+        'Ecommerce': ecommerceList,
+        'Brandable': brandableList,
+        'Portfolio': portfolioList
+    };
+
     // Set dataset attributes on load
     domains.forEach(article => {
         const onclickStr = article.getAttribute('onclick');
@@ -193,26 +317,33 @@
             article.dataset.domainName = fullDomain;
         }
     });
-    // Matches filter function
+
+    // UPDATED Matches filter function
     function matchesFilter(article, filter) {
+        // TLD, length, and hasDigit variables are no longer used for the new filters,
+        // but are kept as they are set by the DOM loop.
         const tld = article.dataset.tld;
         const length = parseInt(article.dataset.nameLength);
         const hasDigit = article.dataset.hasDigit === 'true';
         const domainName = article.dataset.domainName; // Get the full domain name
+
         if (filter === 'all') return true;
-        if (filter.startsWith('.')) return tld === filter;
-        if (filter === '4L') return length === 4 && !hasDigit;
-        if (filter === '4C') return length === 4 && hasDigit;
-        if (filter === 'other') return !['.com', '.net', '.org', '.io', '.uk', '.app', '.xyz'].includes(tld);
-        
-        // NEW FILTER LOGIC: Check if the domain is in the curated list
-        if (filter === 'curated') {
-            return curatedList.includes(domainName);
+
+        // NEW FILTER LOGIC: Check if the domain is in the 'curated' list or any of the 15 topic lists
+        if (categoryLists[filter]) {
+            return categoryLists[filter].includes(domainName);
         }
+        
+        // Removed TLD, 4L, 4C, and 'other' filters as the corresponding buttons were removed.
+        // if (filter.startsWith('.')) return tld === filter;
+        // if (filter === '4L') return length === 4 && !hasDigit;
+        // if (filter === '4C') return length === 4 && hasDigit;
+        // if (filter === 'other') return !['.com', '.net', '.org', '.io', '.uk', '.app', '.xyz'].includes(tld);
         
         return false;
     }
-    // Filter domains
+
+    // Filter domains (function body remains the same, but it uses the updated matchesFilter)
     function filterDomains(filter) {
         currentFilter = filter;
         // Highlight active button
@@ -261,9 +392,3 @@
             closeModal('domainModal');
         }
     });
-    // You can also add the listener to the other modals directly here,
-    // although using `openModal` and `addBackdropCloseListener` is cleaner.
-    // Example (if you don't use openModal for them):
-    // if(faqModal) addBackdropCloseListener('faqModal');
-    // if(contactModal) addBackdropCloseListener('contactModal');
-    // if(blogModal) addBackdropCloseListener('blogModal');
