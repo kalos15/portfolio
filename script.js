@@ -57,25 +57,9 @@
         }
         removeSwipeListeners();
     }
-    
-    // EXISTING Close listener for Domain Modal
     document.getElementById('closeDomainModal').addEventListener('click', () => closeModal('domainModal'));
-    
-    // NEW/UPDATED: Close listeners for FAQ and Contact modals.
-    // NOTE: In the HTML you provided, the close button for FAQ and Contact is inline (onclick="closeModal('modalId')"),
-    // but if you switch to event listeners for consistency, you would use this pattern:
-    // document.getElementById('closeFaqModal').addEventListener('click', () => closeModal('faqModal'));
-    // document.getElementById('closeContactModal').addEventListener('click', () => closeModal('contactModal'));
-    
-    // IMPORTANT: Since your HTML uses inline onclick="closeModal('faqModal')" etc., 
-    // we'll assume the elements with these IDs exist and will ensure the JS is clean.
-    // However, the provided HTML didn't use IDs like 'closeContactModal', so if you 
-    // switch to using IDs on your close buttons instead of inline 'onclick', this is where
-    // you would add the listeners.
-    
-    // For the existing logic to work with the inline 'onclick', no *new* listeners 
-    // are strictly needed here, but the functions below support it.
-    
+    // You should have similar close button handlers for the other modals as well!
+    // Example: document.getElementById('closeFaqModal').addEventListener('click', () => closeModal('faqModal'));
     function redirectToSpaceship(event) {
         const domainName = event.currentTarget.getAttribute('data-domain');
         if (domainName) {
@@ -163,21 +147,17 @@
     }
     // FAQ specific function
     function toggleFaq(element) {
-        // Find the closest FAQ item
-        const faqItem = element.closest('.faq-item');
-
-        // Toggle the 'active' class on the current item
-        // This relies on the new CSS to handle the transition (max-height and rotation)
-        const isActive = faqItem.classList.contains('active');
-
-        // Close all others
-        document.querySelectorAll('#faqModal .faq-item.active').forEach(item => {
-            item.classList.remove('active');
-        });
-
-        // Toggle the current one
-        if (!isActive) {
-            faqItem.classList.add('active');
+        const answer = element.nextElementSibling;
+        const icon = element.querySelector('svg');
+        if (answer.classList.contains('open')) {
+            answer.classList.remove('open');
+            icon.classList.remove('rotate-180');
+        } else {
+            // Close all others
+            document.querySelectorAll('#faqModal .faq-answer.open').forEach(ans => ans.classList.remove('open'));
+            document.querySelectorAll('#faqModal .faq-question svg.rotate-180').forEach(ic => ic.classList.remove('rotate-180'));
+            answer.classList.add('open');
+            icon.classList.add('rotate-180');
         }
     }
     // --- Domain Filtering and Pagination Script ---
